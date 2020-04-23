@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.*
 #include <stdbool.h>
 #include <string.h>
 #include <math.h>
+#include "lib/util.h"
 #define DEBUG 0
 #define MAX_INTENSITY 256
 #define MAX_IMAGE_HEIGHT 512
@@ -63,25 +64,8 @@ typedef struct cluster {
     struct cluster *next;
 } cluster;
 
-typedef struct pair {
-    int x;
-    int y;
-} pair;
 
-
-bool pairCompare(pair A, pair B) {
-    if(A.x==B.x && A.y==B.y) return true;
-    return false;
-}
-
-bool pairCompare(pair A[], pair B[]) {
-    // really bad strategy...
-    if()
-}
-
-
-
-cluster KMeans(int arr[][MAX_IMAGE_WIDTH], int n) {
+cluster KMeans(int image[][MAX_IMAGE_WIDTH], int n) {
     pair prev_mean[MAX_IMAGE_HEIGHT], curr_mean[MAX_IMAGE_HEIGHT];
     int i, a, b;
     
@@ -93,7 +77,7 @@ cluster KMeans(int arr[][MAX_IMAGE_WIDTH], int n) {
 
     // loop until  current mean == previous mean
     while(prev_mean!=curr_mean) {
-
+        
     }  
 
 
