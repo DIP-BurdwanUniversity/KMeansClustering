@@ -41,6 +41,10 @@ int getGrayLevel(pair p) {
     return image_arr[p.x][p.y];
 }
 
-
+// Function pointer to append points inside a cluster 
+void add(Cluster c, pair point) {
+    c.freePosCounter++;
+    c.points[c.freePosCounter] = point;
+}
 
 #endif

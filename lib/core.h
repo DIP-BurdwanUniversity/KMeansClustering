@@ -48,9 +48,11 @@ struct color {
 
 // Structure for image cluster
 typedef struct Cluster {
+    int freePosCounter;  // Tracks free position in points array 
     pair __centroid;     // Cluster centroid
     pair points[MAX_COORD_SIZE];    // [(x1,y1), (x2,y2), (x3,y3),...]
     struct Cluster *next;
+    void (*add) (Cluster c, pair point); // function pointer
 } Cluster;
 
 // Global cluster array stores array of coordinates falling into a cluster 

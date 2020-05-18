@@ -54,7 +54,7 @@ void make_clusters(int img_height, int img_width, int pts) {
                     // Add the point to cluster, after making it a pair
                     pair point;
                     point.x = i, point.y = j;
-                    KMeansCluster.points.add(point);
+                    KMeansCluster[k].fun(point);
                 }
             }
             
