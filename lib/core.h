@@ -44,7 +44,7 @@ struct color {
 
 // Structure for image cluster
 typedef struct cluster {
-    int __cluster_id;
+    int __centroid;     // Cluster centroid
     int points[MAX_IMAGE_HEIGHT][MAX_IMAGE_WIDTH];
     struct cluster *next;
 } cluster;

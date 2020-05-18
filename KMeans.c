@@ -31,19 +31,15 @@ cluster KMeans(int n) {
 
 
 int processing(struct color *image, int width, int height, struct bmpheader h0, struct dibheader h1, int pts) {
-    int *pixel_arr = (int *) malloc(width*height*sizeof(int));
-    int i,j;
-    int total_pixels = width*height;
+    int i, j, divisions, total_pixels, iterations;
+    int first_centroid_diff, second_centroid_diff, third_centroid_diff;
     FILE *fp;
     char filename[100];
-
-    #ifdef DEBUG
-        // printf("Size of pixel array: %d\n\n", sizeof(*pixel_arr));
-    #endif
     
-    // for(i=0;i<height*width; i++) {
-    //     *(pixel_arr+i) = (image[i].r*0.2126) + (image[i].g*0.7152) + (image[i].b*0.0722);    
-    // }
+    int *pixel_arr = (int *) malloc(width*height*sizeof(int));
+    total_pixels = width*height;
+    divisions = MAX_INTENSITY/pts;
+    iterations = 1;
 
     // Write image data into matrix
     for(i=0; i<height; i++) {
@@ -53,17 +49,14 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
     }
 
     // Generate random points (x,y)
-    GenerateInitialPixels(pts);
+    GenerateInitialCentroids(pts);
 
-    printf("END");
-
-
-
-
-
-
-
-
+    for(i=0; i<iterations; i++) {
+        // iterate over all pixels and compare with centroid
+        for(j=0; j<height*width; j++) {
+            
+        }
+    }
 
 
     /* Prepare image file code starts now */

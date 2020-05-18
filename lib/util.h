@@ -26,8 +26,8 @@ bool pairArrayCompare(pair A[], pair B[]) {
     return true;
 }
 
-// Generates random initial pixel coordinates [max. clusters 50]
-void GenerateInitialPixels(int pts) {
+// Generates random initial centroid pixel coordinates [max. clusters 50]
+void GenerateInitialCentroids(int pts) {
     int i;
     // Some random f(x,y) to generate initial random points...
     for(i=0; i<pts; i++) {
