@@ -23,10 +23,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.*
 #include "lib/util.h"
 #include "lib/core.h"
 
+// Makes clusters using KMeans - One iteration only
 void make_clusters(int img_height, int img_width, int pts) {
     int i, j, k, temp_diff, difference;
     pair temp_centroid;
     
+    // Prepare clusters by placing centroids...
+    for(i=0; i<pts; i++) {
+        KMeansCluster[i].__centroid = idx[i];
+        KMeansCluster[i].next = NULL;
+    }
+
+
     for(i=0; i<img_height; i++) {
         for(j=0; j<img_width; j++) {
 
@@ -39,7 +47,19 @@ void make_clusters(int img_height, int img_width, int pts) {
                     temp_centroid = idx[k];
                 }
             }
-            printf("\n%d  :  (%d, %d)", difference, temp_centroid.x, temp_centroid.y);
+            // printf("\n%d  :  (%d, %d)", difference, temp_centroid.x, temp_centroid.y);
+
+            for(k=0; k<pts; k++) {
+                if(KMeansCluster[k].__centroid == temp_centroid) {
+                    // Add the point to cluster, after making it a pair
+                    pair point;
+                    point.x = i, point.y = j;
+                    KMeansCluster.points.add(point);
+                }
+            }
+            
+
+
         }
     }
 }

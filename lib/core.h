@@ -8,6 +8,8 @@
 #define MAX_INTENSITY 256
 #define MAX_IMAGE_HEIGHT 512
 #define MAX_IMAGE_WIDTH 512
+#define MAX_CLUSTER_SIZE 100
+#define MAX_COORD_SIZE 1000
 
 // Globally accessible image array filled up in Kmeans.c >> processing 
 int image_arr[MAX_IMAGE_HEIGHT][MAX_IMAGE_WIDTH];
@@ -46,11 +48,12 @@ struct color {
 
 // Structure for image cluster
 typedef struct Cluster {
-    int __centroid;     // Cluster centroid
-    int points[MAX_IMAGE_HEIGHT][MAX_IMAGE_WIDTH];
+    pair __centroid;     // Cluster centroid
+    pair points[MAX_COORD_SIZE];    // [(x1,y1), (x2,y2), (x3,y3),...]
     struct Cluster *next;
 } Cluster;
 
-
+// Global cluster array stores array of coordinates falling into a cluster 
+Cluster KMeansCluster[MAX_CLUSTER_SIZE];
 
 #endif
