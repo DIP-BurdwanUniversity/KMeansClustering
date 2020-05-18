@@ -9,6 +9,8 @@ typedef struct pair {
     int y;
 } pair;
 
+pair idx[INIT_CLUSTER_LIM];     // initial random indexes
+
 // Compares two pairs for equality
 bool pairCompare(pair A, pair B) {
     if(A.x==B.x && A.y==B.y) return true;
@@ -25,14 +27,13 @@ bool pairArrayCompare(pair A[], pair B[]) {
 }
 
 // Generates random initial pixel coordinates [max. clusters 50]
-pair* GenerateInitialPixels(int pts) {
-    pair idx[INIT_CLUSTER_LIM]; int i;
+void GenerateInitialPixels(int pts) {
+    int i;
     // Some random f(x,y) to generate initial random points...
     for(i=0; i<pts; i++) {
         idx[i].x=pts*i + 2*i + i;
         idx[i].y=pts*i + 2*pts + i;
     }
-    return idx;
 }
 
 // Wrapper returns gray level for pair

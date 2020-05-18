@@ -53,10 +53,7 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
     }
 
     // Generate random points (x,y)
-    pair initial_points[] = GenerateInitialPixels(pts);
-
-
-    printf("%d ", initial_points);
+    GenerateInitialPixels(pts);
 
     printf("END");
 
