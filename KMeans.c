@@ -23,16 +23,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.*
 #include "lib/util.h"
 #include "lib/core.h"
 
-cluster KMeans(int n) {
+void make_clusters(int img_height, int img_width, int pts) {
+    int i, j, k, temp_diff, difference;
+    pair temp_centroid;
     
+    for(i=0; i<img_height; i++) {
+        for(j=0; j<img_width; j++) {
 
+            difference=INT_MAX;
+            // Find closest centroid for every pixel using difference in gray levels
+            for(k=0; k<pts; k++) {
+                temp_diff = abs(image_arr[i][j] - getGrayLevel(idx[k]));
+                if(temp_diff  < difference) {
+                    difference = temp_diff;
+                    temp_centroid = idx[k];
+                }
+            }
+            printf("\n%d  :  (%d, %d)", difference, temp_centroid.x, temp_centroid.y);
+        }
+    }
 }
-
 
 
 int processing(struct color *image, int width, int height, struct bmpheader h0, struct dibheader h1, int pts) {
     int i, j, divisions, total_pixels, iterations;
-    int first_centroid_diff, second_centroid_diff, third_centroid_diff;
     FILE *fp;
     char filename[100];
     
@@ -51,12 +65,7 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
     // Generate random points (x,y)
     GenerateInitialCentroids(pts);
 
-    for(i=0; i<iterations; i++) {
-        // iterate over all pixels and compare with centroid
-        for(j=0; j<height*width; j++) {
-            
-        }
-    }
+    make_clusters(height, width, pts);
 
 
     /* Prepare image file code starts now */

@@ -9,7 +9,9 @@
 #define MAX_IMAGE_HEIGHT 512
 #define MAX_IMAGE_WIDTH 512
 
+// Globally accessible image array filled up in Kmeans.c >> processing 
 int image_arr[MAX_IMAGE_HEIGHT][MAX_IMAGE_WIDTH];
+
 /*Structure for BMP Header*/
 struct bmpheader {
     unsigned char id1;                 // first 2-bytes for BM ID field [1-byte]
@@ -43,10 +45,12 @@ struct color {
 };
 
 // Structure for image cluster
-typedef struct cluster {
+typedef struct Cluster {
     int __centroid;     // Cluster centroid
     int points[MAX_IMAGE_HEIGHT][MAX_IMAGE_WIDTH];
-    struct cluster *next;
-} cluster;
+    struct Cluster *next;
+} Cluster;
+
+
 
 #endif
