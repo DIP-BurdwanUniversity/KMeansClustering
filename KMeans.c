@@ -21,49 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.*
 #include <string.h>
 #include <math.h>
 #include "lib/util.h"
-#define DEBUG 0
-#define MAX_INTENSITY 256
-#define MAX_IMAGE_HEIGHT 512
-#define MAX_IMAGE_WIDTH 512
-
-/*Structure for BMP Header*/
-struct bmpheader {
-    unsigned char id1;                 // first 2-bytes for BM ID field [1-byte]
-    unsigned char id2;                 //                  ;;           [1-byte]
-    unsigned int size;                 // Size of the BMP file
-    unsigned short int app_spec_1;     // Application specific
-    unsigned short int app_spec_2;     // Application specific
-    unsigned int offset;               // Offset where the pixel array (bitmap data) can be found
-};
-
-/*Structure for DIB [Device Independent Bitmap] Header*/
-struct dibheader {
-    unsigned int size;                  // Number of bytes in the DIB header (from this point)
-    int width;                          // Width of the bitmap in pixels
-    int height;                         // Height of the bitmap in pixels. Positive for bottom to top pixel order
-    unsigned short int color_planes;    // Number of color planes being used
-    unsigned short int bits_per_pixel;  // Number of bits per pixel
-    unsigned int compression;           // BI_RGB, pixel array compression used
-    unsigned int size_with_padding;     // Size of the raw bitmap data (including padding)
-    unsigned int resolution_horizontal; // resolution of the image (horizontal)
-    unsigned int resolution_vertical;   // resolution of the image (vertical)
-    unsigned int color_palette;         // Number of colors in the palette
-    unsigned int important_colors;      // Number of important colors; 0 means all colors are important
-};
-
-
-struct color {
-    unsigned char r;
-    unsigned char g;
-    unsigned char b;
-};
-
-typedef struct cluster {
-    int __cluster_id;
-    int points[MAX_IMAGE_HEIGHT][MAX_IMAGE_WIDTH];
-    struct cluster *next;
-} cluster;
-
+#include "lib/core.h"
 
 cluster KMeans(int image[][MAX_IMAGE_WIDTH], int n) {
     pair prev_mean[MAX_IMAGE_HEIGHT], curr_mean[MAX_IMAGE_HEIGHT];
@@ -106,6 +64,7 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
     //     *(pixel_arr+i) = (image[i].r*0.2126) + (image[i].g*0.7152) + (image[i].b*0.0722);    
     // }
 
+    // Write image data into matrix
     for(int i=0; i<height; i++) {
         for(int j=0; j<width; j++) {
             image_arr[i][j] = ((image+i*width+j)->r*0.2126) + ((image+i*width+j)->g*0.2126) + ((image+i*width+j)->b*0.2126);
@@ -113,7 +72,8 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
     }
 
     // Generate random KMeans points (x,y)
-    int cluster_points[pts];
+    pair initial_points[] = GenerateInitialPixels(pts);
+
 
 
 
@@ -193,7 +153,7 @@ int main() {
     int i,j;                            // Loop variables
     int status, points;
     printf("*****************************************************************\n");
-    printf("\tHistogram Equalization on BMP Image (24-Bit non alpha)\n");
+    printf("\tKMeans Clustering on BMP Image (24-Bit non alpha)\n");
     printf("*****************************************************************\n\n");
     printf("\nEnter a BMP image filename: ");
     scanf("%s", filename);

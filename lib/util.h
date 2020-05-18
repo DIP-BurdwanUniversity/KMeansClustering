@@ -1,6 +1,7 @@
 #ifndef UTIL_H
 #define PAIR_LIMIT 10
-
+#define INIT_CLUSTER_LIM 50
+pair* GenerateInitialPixels(int);
 
 typedef struct pair {
     int x;
@@ -20,6 +21,19 @@ bool pairCompare(pair A[], pair B[]) {
     }
     return true;
 }
+
+// Generates random initial pixel coordinates [max. clusters 50]
+pair* GenerateInitialPixels(int pts) {
+    pair idx[INIT_CLUSTER_LIM];
+    // Some random f(x,y) to generate initial random points...
+    for(int i=0; i<pts; i++) {
+        idx[i].x=pts*i + 2*i + i;
+        idx[i].y=pts*i + 2*pts + i;
+    }
+    return idx;
+}
+
+
 
 
 
