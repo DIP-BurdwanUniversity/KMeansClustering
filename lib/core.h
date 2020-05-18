@@ -3,6 +3,7 @@
 #pragma GCC target ("avx2")
 #pragma GCC optimization ("O3")
 #pragma GCC optimization ("unroll-loops")
+#pragma once
 #define DEBUG 0
 #define MAX_INTENSITY 256
 #define MAX_IMAGE_HEIGHT 512

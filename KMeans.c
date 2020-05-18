@@ -23,21 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.*
 #include "lib/util.h"
 #include "lib/core.h"
 
-cluster KMeans(int image[][MAX_IMAGE_WIDTH], int n) {
-    pair prev_mean[MAX_IMAGE_HEIGHT], curr_mean[MAX_IMAGE_HEIGHT];
-    int i, a, b;
+cluster KMeans(int n) {
     
-    // initial mean (random)
-    for(i=0; i<n; i++) {
-        curr_mean[i].x = rand(0,MAX_IMAGE_HEIGHT);
-        curr_mean[i].y = rand(0,MAX_IMAGE_WIDTH);
-    }
-
-    // loop until  current mean == previous mean
-    while(prev_mean!=curr_mean) {
-        
-    }  
-
 
 }
 
@@ -45,7 +32,7 @@ cluster KMeans(int image[][MAX_IMAGE_WIDTH], int n) {
 
 int processing(struct color *image, int width, int height, struct bmpheader h0, struct dibheader h1, int pts) {
     int *pixel_arr = (int *) malloc(width*height*sizeof(int));
-    int i;
+    int i,j;
     int total_pixels = width*height;
     FILE *fp;
     char filename[100];
@@ -59,21 +46,19 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
     // }
 
     // Write image data into matrix
-    for(int i=0; i<height; i++) {
-        for(int j=0; j<width; j++) {
+    for(i=0; i<height; i++) {
+        for(j=0; j<width; j++) {
             image_arr[i][j] = ((image+i*width+j)->r*0.2126) + ((image+i*width+j)->g*0.2126) + ((image+i*width+j)->b*0.2126);
         }
     }
 
     // Generate random points (x,y)
     pair initial_points[] = GenerateInitialPixels(pts);
-    
 
 
+    printf("%d ", initial_points);
 
-
-
-
+    printf("END");
 
 
 
