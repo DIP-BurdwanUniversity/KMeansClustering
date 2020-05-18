@@ -43,18 +43,12 @@ cluster KMeans(int image[][MAX_IMAGE_WIDTH], int n) {
 
 
 
-
-
-
-
-
 int processing(struct color *image, int width, int height, struct bmpheader h0, struct dibheader h1, int pts) {
     int *pixel_arr = (int *) malloc(width*height*sizeof(int));
     int i;
     int total_pixels = width*height;
     FILE *fp;
     char filename[100];
-    int image_arr[MAX_IMAGE_HEIGHT][MAX_IMAGE_WIDTH];
 
     #ifdef DEBUG
         // printf("Size of pixel array: %d\n\n", sizeof(*pixel_arr));
@@ -71,9 +65,9 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
         }
     }
 
-    // Generate random KMeans points (x,y)
+    // Generate random points (x,y)
     pair initial_points[] = GenerateInitialPixels(pts);
-
+    
 
 
 

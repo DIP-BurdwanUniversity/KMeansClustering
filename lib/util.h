@@ -1,4 +1,5 @@
 #ifndef UTIL_H
+#include "core.h"
 #define PAIR_LIMIT 10
 #define INIT_CLUSTER_LIM 50
 pair* GenerateInitialPixels(int);
@@ -8,13 +9,13 @@ typedef struct pair {
     int y;
 } pair;
 
-
-
+// Compares two pairs for equality
 bool pairCompare(pair A, pair B) {
     if(A.x==B.x && A.y==B.y) return true;
     return false;
 }
 
+// Overloads above pairCompare() to work with arrays
 bool pairCompare(pair A[], pair B[]) {
     for(int i=0; i<PAIR_LIMIT; i++) {
         if(A[i].x!=B[i].x || A[i].y!=B[i].y) return false; 
@@ -33,7 +34,10 @@ pair* GenerateInitialPixels(int pts) {
     return idx;
 }
 
-
+// Wrapper returns gray level for pair
+int getGrayLevel(pair p) {
+    return image_arr[p.x][p.y];
+}
 
 
 

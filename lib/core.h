@@ -1,9 +1,14 @@
 #ifndef CORE_H
+#pragma GCC optimize("Ofast")
+#pragma GCC target ("avx2")
+#pragma GCC optimization ("O3")
+#pragma GCC optimization ("unroll-loops")
 #define DEBUG 0
 #define MAX_INTENSITY 256
 #define MAX_IMAGE_HEIGHT 512
 #define MAX_IMAGE_WIDTH 512
 
+int image_arr[MAX_IMAGE_HEIGHT][MAX_IMAGE_WIDTH];
 /*Structure for BMP Header*/
 struct bmpheader {
     unsigned char id1;                 // first 2-bytes for BM ID field [1-byte]
