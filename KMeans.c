@@ -50,16 +50,13 @@ void make_clusters(int img_height, int img_width, int pts) {
             // printf("\n%d  :  (%d, %d)", difference, temp_centroid.x, temp_centroid.y);
 
             for(k=0; k<pts; k++) {
-                if(KMeansCluster[k].__centroid == temp_centroid) {
+                if(pairCompare(KMeansCluster[k].__centroid, temp_centroid)) {
                     // Add the point to cluster, after making it a pair
                     pair point;
                     point.x = i, point.y = j;
                     KMeansCluster[k].add(KMeansCluster[k], point);
                 }
             }
-            
-
-
         }
     }
 }
