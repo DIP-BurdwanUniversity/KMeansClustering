@@ -66,6 +66,7 @@ void add(Cluster c, pair point) {
         return;
     }
     c.points[c.freePosCounter] = point;
+    printf("\nExecuting...");
 }
 
 #endif

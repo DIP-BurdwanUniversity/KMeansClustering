@@ -47,7 +47,7 @@ void make_clusters(int img_height, int img_width, int pts) {
                     temp_centroid = idx[k];
                 }
             }
-            // printf("\n%d  :  (%d, %d)", difference, temp_centroid.x, temp_centroid.y);
+            printf("\n%d  :  (%d, %d)", difference, temp_centroid.x, temp_centroid.y);
 
             for(k=0; k<pts; k++) {
                 if(pairCompare(KMeansCluster[k].__centroid, temp_centroid)) {
@@ -60,6 +60,33 @@ void make_clusters(int img_height, int img_width, int pts) {
         }
     }
 }
+
+
+void printClusterStats(int pts) {
+    int i,j;
+    for(i=0; i<pts; i++) {
+        printf("\n%d\n", KMeansCluster[i].__centroid);
+        for(j=0; j<KMeansCluster[i].freePosCounter-1; j++) {
+            printf("%d ", getGrayLevel(KMeansCluster[i].points[j]));
+        }
+    }
+}
+
+
+
+// Prints color map from image file [not from program's global array]
+void printColorMap(struct color *image, int width, int height) {
+    long long int image_size = sizeof(*image)*width*height;
+    int i=0;
+    while(i<image_size) {
+        printf("%d ", (image+i)->r);
+        i++;
+    }
+    printf("\n\nTotal count of pixels: %d\n", i);
+}
+
+
+
 
 
 int processing(struct color *image, int width, int height, struct bmpheader h0, struct dibheader h1, int pts) {
@@ -84,6 +111,7 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
 
     make_clusters(height, width, pts);
 
+    printClusterStats(pts);
 
     /* Prepare image file code starts now */
 
@@ -128,18 +156,6 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
     free(pixel_arr);
     return 0;
 }
-
-
-void printColor(struct color *image, int width, int height) {
-    long long int image_size = sizeof(*image)*width*height;
-    int i=0;
-    while(i<image_size) {
-        printf("%d ", (image+i)->r);
-        i++;
-    }
-    printf("\n\nTotal count of pixels: %d\n", i);
-}
-
 
 
 int main() {
@@ -205,7 +221,7 @@ int main() {
     fclose(fp);                  // Close file pointer
     
     #ifdef DEBUG
-        // printColor(image, header1.width, header1.height);
+        // printColorMap(image, header1.width, header1.height);
     #endif
     
     printf("Enter cluster points for KMeans : ");
