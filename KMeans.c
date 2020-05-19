@@ -47,14 +47,15 @@ void make_clusters(int img_height, int img_width, int pts) {
                     temp_centroid = idx[k];
                 }
             }
-            printf("\n%d  :  (%d, %d)", difference, temp_centroid.x, temp_centroid.y);
+            // printf("\n%d  :  (%d, %d)", difference, temp_centroid.x, temp_centroid.y);
 
             for(k=0; k<pts; k++) {
                 if(pairCompare(KMeansCluster[k].__centroid, temp_centroid)) {
                     // Add the point to cluster, after making it a pair
                     pair point;
                     point.x = i, point.y = j;
-                    KMeansCluster[k].add(KMeansCluster[k], point);
+                    KMeansCluster[k].add_ptr = add;     // Implemented function pointer
+                    KMeansCluster[k].add_ptr(KMeansCluster[k], point);
                 }
             }
         }
@@ -63,11 +64,12 @@ void make_clusters(int img_height, int img_width, int pts) {
 
 
 void printClusterStats(int pts) {
-    int i,j;
+    int i,j,gray;
     for(i=0; i<pts; i++) {
-        printf("\n%d\n", KMeansCluster[i].__centroid);
+        printf("\n{%d, %d}", KMeansCluster[i].__centroid.x, KMeansCluster[i].__centroid.y);
         for(j=0; j<KMeansCluster[i].freePosCounter-1; j++) {
-            printf("%d ", getGrayLevel(KMeansCluster[i].points[j]));
+            gray = getGrayLevel(KMeansCluster[i].points[j]);
+            printf("%d ", gray);
         }
     }
 }

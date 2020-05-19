@@ -9,14 +9,14 @@ typedef struct pair {
     int y;
 } pair;
 
-
+// typedef   void (*Operation)(int a , int b );
 // Structure for image cluster
 typedef struct Cluster {
     int freePosCounter;  // Tracks free position in points array 
     pair __centroid;     // Cluster centroid
     pair points[MAX_COORD_SIZE];    // [(x1,y1), (x2,y2), (x3,y3),...]
     struct Cluster *next;
-    void (*add) (struct Cluster c, pair point); // function pointer
+    void (*add_ptr) (struct Cluster c, pair point); // function pointer
 } Cluster;
 
 // Global cluster array stores array of coordinates falling into a cluster 
@@ -66,7 +66,6 @@ void add(Cluster c, pair point) {
         return;
     }
     c.points[c.freePosCounter] = point;
-    printf("\nExecuting...");
 }
 
 #endif
