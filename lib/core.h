@@ -9,7 +9,7 @@
 #define MAX_IMAGE_HEIGHT 512
 #define MAX_IMAGE_WIDTH 512
 #define MAX_CLUSTER_SIZE 100
-#define MAX_COORD_SIZE 1000
+#define MAX_COORD_SIZE 100000
 
 // Globally accessible image array filled up in Kmeans.c >> processing 
 int image_arr[MAX_IMAGE_HEIGHT][MAX_IMAGE_WIDTH];
