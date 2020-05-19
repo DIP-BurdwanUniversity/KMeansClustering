@@ -99,8 +99,7 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
     int i, j, divisions, total_pixels, iterations;
     FILE *fp;
     char filename[100];
-    
-    int *pixel_arr = (int *) malloc(width*height*sizeof(int));
+
     total_pixels = width*height;
     divisions = MAX_INTENSITY/pts;
     iterations = 1;
@@ -122,7 +121,7 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
     /* Prepare image file code starts now */
 
     // Write modified image array to file...
-    printf("\nEnter name of histogram equalized image file: ");
+    printf("\nEnter name of clustered image file: ");
     scanf("%s", filename);
     if((fp=fopen(filename, "wb")) == NULL) {
         printf("\nError, creating BMP file\n");
@@ -156,10 +155,8 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
 
     for(i=0; i<height; i++)
         for(j=0; j<width; j++)
-            fwrite((image+i*width+j),1,sizeof(struct color),fp);
+            fwrite(&image_arr[i][j],1,sizeof(struct color),fp);
 
-
-    free(pixel_arr);
     return 0;
 }
 
