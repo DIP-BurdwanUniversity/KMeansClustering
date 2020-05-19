@@ -96,7 +96,7 @@ void printColorMap(struct color *image, int width, int height) {
 
 
 int processing(struct color *image, int width, int height, struct bmpheader h0, struct dibheader h1, int pts) {
-    int i, j, divisions, total_pixels, iterations;
+    int i, j, k, divisions, total_pixels, iterations;
     FILE *fp;
     char filename[100];
 
@@ -153,9 +153,13 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
     // Copy modified pixels...
     fseek(fp,54,SEEK_SET);
 
-    for(i=0; i<height; i++)
-        for(j=0; j<width; j++)
-            fwrite(&image_arr[i][j],1,sizeof(struct color),fp);
+    for(i=0; i<height; i++) {
+        for(j=0; j<width; j++) {
+            fwrite(&image_arr[i][j],1,sizeof(unsigned char),fp);
+            fwrite(&image_arr[i][j],1,sizeof(unsigned char),fp);
+            fwrite(&image_arr[i][j],1,sizeof(unsigned char),fp);
+        }
+    }
 
     return 0;
 }
@@ -232,7 +236,7 @@ int main() {
     
     status = processing(image, header1.width, header1.height, header0, header1, points);
     if(status == -1) printf("\nFailed to successfully convert image\n");
-    else printf("\nSuccessfully equalized image\n");
+    else printf("\nSuccessfully clustered image\n");
 
     return 0;
 }
