@@ -57,6 +57,7 @@ int getGrayLevel(pair p) {
 // Function pointer to append points inside a cluster 
 void add(Cluster c, pair point) {
     c.freePosCounter++;
+    printf("\nfree pos. count : %d", c.freePosCounter);
     if(c.freePosCounter < 0) {
         printf("Underflow occured\nExiting...\n");
         return;

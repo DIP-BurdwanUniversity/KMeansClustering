@@ -66,7 +66,7 @@ void make_clusters(int img_height, int img_width, int pts) {
 void printClusterStats(int pts) {
     int i,j,gray;
     for(i=0; i<pts; i++) {
-        printf("\n{%d, %d}", KMeansCluster[i].__centroid.x, KMeansCluster[i].__centroid.y);
+        printf("\n{%d, %d} %d", KMeansCluster[i].__centroid.x, KMeansCluster[i].__centroid.y, KMeansCluster[i].freePosCounter);
         for(j=0; j<KMeansCluster[i].freePosCounter-1; j++) {
             gray = getGrayLevel(KMeansCluster[i].points[j]);
             printf("%d ", gray);
