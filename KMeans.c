@@ -58,15 +58,19 @@ void make_clusters(int img_height, int img_width, int pts) {
                     KMeansCluster[k].add_ptr(&KMeansCluster[k], point);
                 }
             }
+
+            // Modifying global image array with gray level from centroid pixel
+            image_arr[i][j] = getGrayLevel(temp_centroid);
         }
     }
 }
 
 
+// Spits data in cluster for a particular centroid
 void printClusterStats(int pts) {
     int i,j,gray;
     for(i=0; i<pts; i++) {
-        // printf("\n{%d, %d} %d", KMeansCluster[i].__centroid.x, KMeansCluster[i].__centroid.y, KMeansCluster[i].freePosCounter);
+        printf("\n{%d, %d}\n", KMeansCluster[i].__centroid.x, KMeansCluster[i].__centroid.y);
         for(j=0; j< KMeansCluster[i].freePosCounter-1; j++) {
             gray = getGrayLevel(KMeansCluster[i].points[j]);
             printf("%d  ", gray);
@@ -113,46 +117,46 @@ int processing(struct color *image, int width, int height, struct bmpheader h0, 
 
     make_clusters(height, width, pts);
 
-    printClusterStats(pts);
+    // printClusterStats(pts);
 
     /* Prepare image file code starts now */
 
-    // // Write equalized image to file...
-    // printf("\nEnter name of histogram equalized image file: ");
-    // scanf("%s", filename);
-    // if((fp=fopen(filename, "wb")) == NULL) {
-    //     printf("\nError, creating BMP file\n");
-    //     return -1;
-    // }
+    // Write modified image array to file...
+    printf("\nEnter name of histogram equalized image file: ");
+    scanf("%s", filename);
+    if((fp=fopen(filename, "wb")) == NULL) {
+        printf("\nError, creating BMP file\n");
+        return -1;
+    }
 
-    // fwrite(&h0.id1, 1, sizeof(h0.id1), fp);
-    // fwrite(&h0.id2, 1, sizeof(h0.id2), fp);
-    // fwrite(&h0.size, 1, sizeof(h0.size), fp);
-    // fwrite(&h0.app_spec_1, 1, sizeof(h0.app_spec_1), fp);
-    // fwrite(&h0.app_spec_2, 1, sizeof(h0.app_spec_2), fp);
-    // fwrite(&h0.offset, 1, sizeof(h0.offset), fp);
+    fwrite(&h0.id1, 1, sizeof(h0.id1), fp);
+    fwrite(&h0.id2, 1, sizeof(h0.id2), fp);
+    fwrite(&h0.size, 1, sizeof(h0.size), fp);
+    fwrite(&h0.app_spec_1, 1, sizeof(h0.app_spec_1), fp);
+    fwrite(&h0.app_spec_2, 1, sizeof(h0.app_spec_2), fp);
+    fwrite(&h0.offset, 1, sizeof(h0.offset), fp);
     
-    // fwrite(&h1.size, 1, sizeof(h1.size), fp);
-    // fwrite(&h1.width, 1, sizeof(h1.width), fp);
-    // fwrite(&h1.height, 1, sizeof(h1.height), fp);
-    // fwrite(&h1.color_planes, 1, sizeof(h1.color_planes), fp);
-    // fwrite(&h1.bits_per_pixel, 1, sizeof(h1.bits_per_pixel), fp);
-    // fwrite(&h1.compression, 1, sizeof(h1.compression), fp);
-    // fwrite(&h1.size_with_padding, 1, sizeof(h1.size_with_padding), fp);
-    // fwrite(&h1.resolution_horizontal, 1, sizeof(h1.resolution_horizontal), fp);
-    // fwrite(&h1.resolution_vertical, 1, sizeof(h1.resolution_vertical), fp);
-    // fwrite(&h1.color_palette, 1, sizeof(h1.color_palette), fp);
-    // fwrite(&h1.important_colors, 1, sizeof(h1.important_colors), fp);
+    fwrite(&h1.size, 1, sizeof(h1.size), fp);
+    fwrite(&h1.width, 1, sizeof(h1.width), fp);
+    fwrite(&h1.height, 1, sizeof(h1.height), fp);
+    fwrite(&h1.color_planes, 1, sizeof(h1.color_planes), fp);
+    fwrite(&h1.bits_per_pixel, 1, sizeof(h1.bits_per_pixel), fp);
+    fwrite(&h1.compression, 1, sizeof(h1.compression), fp);
+    fwrite(&h1.size_with_padding, 1, sizeof(h1.size_with_padding), fp);
+    fwrite(&h1.resolution_horizontal, 1, sizeof(h1.resolution_horizontal), fp);
+    fwrite(&h1.resolution_vertical, 1, sizeof(h1.resolution_vertical), fp);
+    fwrite(&h1.color_palette, 1, sizeof(h1.color_palette), fp);
+    fwrite(&h1.important_colors, 1, sizeof(h1.important_colors), fp);
 
-    // printf("Debug: File pointer is at %d bytes\n", ftell(fp));
+    printf("Debug: File pointer is at %d bytes\n", ftell(fp));
 
 
-    // // Copy modified pixels...
-    // fseek(fp,54,SEEK_SET);
+    // Copy modified pixels...
+    fseek(fp,54,SEEK_SET);
 
-    // for(i=0; i<height; i++)
-    //     for(j=0; j<width; j++)
-    //         fwrite((image+i*width+j),1,sizeof(struct color),fp);
+    for(i=0; i<height; i++)
+        for(j=0; j<width; j++)
+            fwrite((image+i*width+j),1,sizeof(struct color),fp);
 
 
     free(pixel_arr);
